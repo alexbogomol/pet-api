@@ -6,6 +6,10 @@ import {
   Param,
   Delete,
   Put,
+  NotFoundException,
+  HttpCode,
+  HttpStatus,
+  ValidationPipe,
 } from '@nestjs/common';
 import { PetsService } from './pets.service';
 import { CreatePetDto } from './dto/create-pet.dto';
@@ -22,20 +26,26 @@ export class PetsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.petsService.findOne(id);
+    const pet = this.petsService.findOne(id);
+    if (!pet) {
+      throw new NotFoundException(`Pet with id ${id} not found`);
+    }
+    return pet;
   }
 
   @Post()
-  create(@Body() createPetDto: CreatePetDto) {
+  @HttpCode(HttpStatus.CREATED)
+  create(@Body(new ValidationPipe()) createPetDto: CreatePetDto) {
     return this.petsService.create(createPetDto);
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updatePetDto: UpdatePetDto) {
+  update(@Param('id') id: string, @Body(new ValidationPipe()) updatePetDto: UpdatePetDto) {
     return this.petsService.update(id, updatePetDto);
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id') id: string) {
     return this.petsService.remove(id);
   }

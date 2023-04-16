@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Pet } from './interfaces/pet.interface';
 import { CreatePetDto } from './dto/create-pet.dto';
 import { UpdatePetDto } from './dto/update-pet.dto';
@@ -26,6 +26,9 @@ export class PetsService {
 
   update(id: string, updatePetDto: UpdatePetDto): Pet {
     const petIndex = this.pets.findIndex((pet) => pet.id === id);
+    if (petIndex === -1) {
+      throw new NotFoundException(`Pet with id ${id} not found`);
+    }
     const updatedPet: Pet = {
       ...this.pets[petIndex],
       ...updatePetDto,
@@ -36,6 +39,9 @@ export class PetsService {
 
   remove(id: string): void {
     const petIndex = this.pets.findIndex((pet) => pet.id === id);
+    if (petIndex === -1) {
+      throw new NotFoundException(`Pet with id ${id} not found`);
+    }
     this.pets.splice(petIndex, 1);
   }
 }

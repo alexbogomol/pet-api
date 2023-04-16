@@ -18,7 +18,7 @@ describe('PetsController (Integration)', () => {
   });
 
   describe('GET /pets', () => {
-    test.skip('should return an array of pets', async () => {
+    it('should return an array of pets', async () => {
       const res = await request(app.getHttpServer())
         .get('/pets')
         .expect(HttpStatus.OK);
@@ -37,10 +37,14 @@ describe('PetsController (Integration)', () => {
       expect(res.body).toHaveProperty('age');
     });
 
-    test.skip('should return a 404 if pet is not found', async () => {
+    it('should return a 404 if pet is not found', async () => {
       await request(app.getHttpServer())
         .get('/pets/999')
-        .expect(HttpStatus.NOT_FOUND);
+        .expect(HttpStatus.NOT_FOUND, {
+          statusCode: 404,
+          message: 'Pet with id 999 not found',
+          error: 'Not Found',
+        });
     });
   });
 
@@ -86,16 +90,24 @@ describe('PetsController (Integration)', () => {
     test.skip('should remove a pet', async () => {
       await request(app.getHttpServer())
         .delete('/pets/1')
-        .expect(HttpStatus.OK);
+        .expect(HttpStatus.NO_CONTENT);
       await request(app.getHttpServer())
         .get('/pets/1')
-        .expect(HttpStatus.NOT_FOUND);
+        .expect(HttpStatus.NOT_FOUND, {
+          statusCode: 404,
+          message: 'Pet with id 1 not found',
+          error: 'Not Found',
+        });
     });
 
-    test.skip('should return a 404 if pet is not found', async () => {
+    it('should return a 404 if pet is not found', async () => {
       await request(app.getHttpServer())
         .delete('/pets/999')
-        .expect(HttpStatus.NOT_FOUND);
+        .expect(HttpStatus.NOT_FOUND, {
+          statusCode: 404,
+          message: 'Pet with id 999 not found',
+          error: 'Not Found',
+        });
     });
   });
 
