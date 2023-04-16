@@ -1,7 +1,7 @@
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
-import { PetsModule } from './pets.module';
+import { PetsModule } from '../src/pets/pets.module';
 
 describe('PetsController (e2e)', () => {
   let app: INestApplication;

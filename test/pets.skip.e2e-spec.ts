@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { PetsModule } from './pets.module';
-import { CreatePetDto } from './dto/create-pet.dto';
-import { UpdatePetDto } from './dto/update-pet.dto';
+import { PetsModule } from '../src/pets/pets.module';
+import { CreatePetDto } from '../src/pets/dto/create-pet.dto';
+import { UpdatePetDto } from '../src/pets/dto/update-pet.dto';
 
 describe('PetsController (Integration)', () => {
   let app: INestApplication;
