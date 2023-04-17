@@ -40,7 +40,10 @@ export class PetsController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body(new ValidationPipe()) updatePetDto: UpdatePetDto) {
+  update(
+    @Param('id') id: string,
+    @Body(new ValidationPipe()) updatePetDto: UpdatePetDto,
+  ) {
     return this.petsService.update(id, updatePetDto);
   }
 

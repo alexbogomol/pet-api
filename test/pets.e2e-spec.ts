@@ -43,12 +43,9 @@ describe('PetsController (e2e)', () => {
         .send(pet)
         .expect(HttpStatus.BAD_REQUEST, {
           statusCode: 400,
-          message: [
-              "breed must be a string",
-              "breed should not be empty"
-          ],
-          error: "Bad Request"
-      });
+          message: ['breed must be a string', 'breed should not be empty'],
+          error: 'Bad Request',
+        });
     });
   });
 
@@ -126,11 +123,9 @@ describe('PetsController (e2e)', () => {
         .send(updatedPet)
         .expect(HttpStatus.BAD_REQUEST, {
           statusCode: 400,
-          message: [
-              "breed must be a string"
-          ],
-          error: "Bad Request"
-      });
+          message: ['breed must be a string'],
+          error: 'Bad Request',
+        });
     });
   });
 
