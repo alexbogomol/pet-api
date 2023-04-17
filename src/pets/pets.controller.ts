@@ -34,7 +34,8 @@ export class PetsController {
   }
 
   @Post()
-  create(@Body() createPetDto: CreatePetDto) {
+  @HttpCode(HttpStatus.CREATED)
+  create(@Body(new ValidationPipe()) createPetDto: CreatePetDto) {
     return this.petsService.create(createPetDto);
   }
 
@@ -44,6 +45,7 @@ export class PetsController {
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id') id: string) {
     return this.petsService.remove(id);
   }
