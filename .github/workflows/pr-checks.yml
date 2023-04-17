@@ -1,0 +1,46 @@
+name: Pull Request Checks
+
+on:
+  pull_request:
+    branches: [ main ]
+
+env:
+  NODE_JS_VERSION: 18
+
+jobs:
+  CI:
+    name: CI Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: List code directory
+        run: ls -l
+
+      - name: Set up Node.Js ${{ env.NODE_JS_VERSION }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_JS_VERSION }}
+          cache: npm
+
+      - name: Check Node.Js and enviroment
+        run: |
+          node --version
+          npm --version
+          docker --version
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Enforce code formatting
+        run: npm run format:check
+
+      - name: Build project
+        run: npm run build
+
+      - name: Run Unit Tests
+        run: npm run test
+
+      - name: Run Integration Tests
+        run: npm run test:e2e

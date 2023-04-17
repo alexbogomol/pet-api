@@ -1,7 +1,7 @@
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
-import { PetsModule } from './pets.module';
+import { PetsModule } from '../src/pets/pets.module';
 
 describe('PetsController (e2e)', () => {
   let app: INestApplication;
@@ -43,12 +43,9 @@ describe('PetsController (e2e)', () => {
         .send(pet)
         .expect(HttpStatus.BAD_REQUEST, {
           statusCode: 400,
-          message: [
-              "breed must be a string",
-              "breed should not be empty"
-          ],
-          error: "Bad Request"
-      });
+          message: ['breed must be a string', 'breed should not be empty'],
+          error: 'Bad Request',
+        });
     });
   });
 
@@ -126,11 +123,9 @@ describe('PetsController (e2e)', () => {
         .send(updatedPet)
         .expect(HttpStatus.BAD_REQUEST, {
           statusCode: 400,
-          message: [
-              "breed must be a string"
-          ],
-          error: "Bad Request"
-      });
+          message: ['breed must be a string'],
+          error: 'Bad Request',
+        });
     });
   });
 
